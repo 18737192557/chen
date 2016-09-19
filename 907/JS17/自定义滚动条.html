@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#box {
+				width: 800px;
+				height: 30px;
+				background: gray;
+				border-radius: 15px;
+				margin: 50px auto;
+				position: relative;
+			}
+			#slider {
+				width: 30px;
+				height: 30px;
+				background: green;
+				border-radius: 50%;
+				position: absolute;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<div id="slider"></div>
+		</div>
+	</body>
+	
+	<script type="text/javascript">
+		var boxDiv = document.getElementById("box");
+		var slider = document.getElementById("slider");
+		var maxL = boxDiv.clientWidth - slider.offsetWidth;
+		
+		slider.onmousedown = function(eve) {
+			var x = eve.clientX - this.offsetLeft;
+
+			document.onmousemove = function(eve) {
+				var l = eve.clientX - x;
+				if(l > maxL) {
+					l = maxL;
+				}
+				if(l < 0) {
+					l = 0;
+				}
+				slider.style.left = l + 'px';
+			};
+			document.onmouseup = function() {
+				document.onmousemove = document.onmouseup = null;
+			}
+			
+		};
+		
+		
+		
+	</script>
+	
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#wrap {
+				width: 600px;
+				height: 400px;
+				margin: 10px auto;
+				overflow: hidden;
+				position: relative;
+			}
+			#content {
+				width: 2000px;
+				height: 400px;
+				position: absolute;
+			}
+			#content>img {
+				width: 100%;
+				height: 100%;
+			}
+		
+			#box {
+				width: 800px;
+				height: 30px;
+				background: gray;
+				border-radius: 15px;
+				margin: 50px auto;
+				position: relative;
+			}
+			#slider {
+				width: 30px;
+				height: 30px;
+				background: green;
+				border-radius: 50%;
+				position: absolute;
+			}
+			
+			
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="content">
+				<img src="img/promPic3.jpg"/>
+			</div>
+		</div>
+		
+		<div id="box">
+			<div id="slider"></div>
+		</div>
+	</body>
+	
+	<script type="text/javascript">
+		var boxDiv = document.getElementById("box");
+		var slider = document.getElementById("slider");
+		var contentDiv = document.getElementById("content");
+		
+		var maxL = boxDiv.clientWidth - slider.offsetWidth;
+		var imgMaxL = 1400;
+		var l = 0;
+		
+		slider.onmousedown = function(eve) {
+			var x = eve.clientX - this.offsetLeft;
+
+			document.onmousemove = function(eve) {
+				l = eve.clientX - x;
+				if(l > maxL) {
+					l = maxL;
+				}
+				if(l < 0) {
+					l = 0;
+				}
+				slider.style.left = l + 'px';
+				var conL = l/maxL * imgMaxL;
+				contentDiv.style.left = -conL + "px";
+			};
+			document.onmouseup = function() {
+				document.onmousemove = document.onmouseup = null;
+			}
+			
+		};
+	
+		
+		wheelScroll(contentDiv);
+		
+		
+		/**滚轮事件的封装函数：*/
+		function wheelScroll(obj) {
+			obj.addEventListener("DOMMouseScroll", scroll, false);
+			obj.addEventListener("mousewheel", scroll, false);
+			function scroll(eve) {
+			var down = false;//假设向上
+				if(eve.detail) {
+					
+					down = eve.detail > 0 ? true :false;
+				} else {
+					down = eve.wheelDelta < 0 ? true : false;
+				}
+				if(down) {
+					l-=20;
+					if(l < 0){ l = 0;}
+					contentDiv.style.left = -l + "px";
+				} else {
+					l+=20;
+					if(l > imgMaxL) {l = imgMaxL};
+					contentDiv.style.left = -l + "px";
+				}
+			}	
+		}
+		
+		
+	</script>
+	
+</html>

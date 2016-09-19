@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#box{
+				width: 800px;
+				height: 30px;
+				background: darkgray;
+				margin: 50px auto;
+				position: relative;
+			}
+			#slider{
+				width: 30px;
+				height: 30px;
+				background: green;
+				position: absolute;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<div id="slider"></div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var boxDiv=document.getElementById("box");
+		var sliderDiv=document.getElementById("slider");
+		var maxL=boxDiv.clientWidth-sliderDiv.offsetWidth;
+		sliderDiv.onmousedown=function(eve){
+			var x=eve.clientX-sliderDiv.offsetLeft;
+			document.onmousemove=function(eve){
+				var l=eve.clientX-x;
+				if(l<0){
+					l=0;
+				}else if(l>maxL){
+					l=maxL;
+				}
+				sliderDiv.style.left=l+"px";
+			}
+			document.onmouseup=function(){
+				document.onmousemove=document.onmouseup=null;
+			}
+		}
+	</script>
+</html>

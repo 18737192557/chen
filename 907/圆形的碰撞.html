@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+		.d1{
+			width: 100px;
+			height: 100px;
+			background: red;
+			border-radius: 50%;
+			position: absolute;
+		}	
+		.d2{
+			width: 100px;
+			height: 100px;
+			background: yellow;
+			border-radius: 50%;
+			position: absolute;
+			left: 300px;
+			top:200px;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="d1"></div>
+		<div class="d2"></div>
+	</body>
+	<script type="text/javascript">
+	
+	    var oDiv1=document.getElementsByClassName("d1")[0];
+		var oDiv2=document.getElementsByClassName("d2")[0];
+		oDiv1.onmousedown=function(eve){
+			
+			var x=eve.clientX-oDiv1.offsetLeft;
+			var y=eve.clientY-this.offsetTop;
+			document.onmousemove=function(eve){
+				var l=eve.clientX-x;
+				var t=eve.clientY-y;
+				//碰撞检测 计算圆心距和两圆的半径和
+				var x1=oDiv1.offsetLeft+oDiv1.offsetWidth/2;
+				var y1=oDiv1.offsetTop+oDiv1.offsetHeight/2;
+				var x2=oDiv2.offsetLeft+oDiv2.offsetWidth/2;
+				var y2=oDiv2.offsetTop+oDiv2.offsetHeight/2;
+				//圆心距
+				var c=Math.sqrt(Math.pow((x1-x2),2)+Math.pow((y1-y2),2));
+				if(c>100){
+					//不碰撞
+					oDiv1.style.left=l+"px";
+					oDiv1.style.top=t+"px";
+				}else{
+					//碰撞
+					oDiv1.style.background="blue";
+				}
+				
+		}
+			document.onmouseup=function(){
+			document.onmousemove=document.onmouseup=null;
+		}
+		}
+		
+	</script>
+</html>
